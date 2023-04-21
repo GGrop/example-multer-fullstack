@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Formulario de usuario</title>
+  </head>
+  <body>
+    <form
+      enctype="multipart/form-data"
+      onsubmit="submitForm(event)"
+    >
+      <label>
+        Nombre:
+        <input type="text" name="name" />
+      </label>
+      <br />
+      <label>
+        Dirección:
+        <input type="text" name="address" />
+      </label>
+      <br />
+      <label>
+        Escudo:
+        <input type="file" name="shield" />
+      </label>
+      <br />
+      <button type="submit">Enviar</button>
+    </form>
+
+    <script>
+      function submitForm(event) {
+        event.preventDefault();
+
+        const form = event.target;
+        const formData = new FormData(form);
+
+        fetch('http://localhost:3000/api/user/1', {
+          method: 'PUT',
+          body: formData,
+        })
+          .then((response) => {
+            if (response.ok) {
+              console.log('Formulario enviado');
+            } else {
+              console.error('Error al enviar el formulario');
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+    </script>
+  </body>
+</html>
